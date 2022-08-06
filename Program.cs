@@ -272,6 +272,8 @@ namespace Nopiosee
             m.Add("idiots ", " idioote");
             m.Add("language ", " taal");
             m.Add("languages ", " taale");
+            m.Add("hate ", " haates");
+            m.Add("hates ", " haatese");
         }
         static void Main(string[] args)
         {
