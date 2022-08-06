@@ -285,7 +285,7 @@ namespace Nopiosee
                     foreach (string line in m.Keys)
                     {
                         str = str.ToLower();
-                        str = str.ReplaceWholeWord(line.Trim(), m[line].Split("-".ToCharArray())[1].Trim());
+                        str = str.ReplaceWholeWord(line.Trim(), m[line].Trim());
                         str = Regex.Replace(str, " {2,}", " ");
                     }
                     Console.WriteLine(str);
