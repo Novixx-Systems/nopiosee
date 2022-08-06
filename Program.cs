@@ -88,9 +88,9 @@ namespace Nopiosee
                 }
                 Environment.Exit(0);
             }
-            Console.WriteLine("Nopiosee Translator Tool\n");
             if (which == null)
             {
+                Console.WriteLine("Nopiosee Translator Tool\n");
                 while (which != "1" && which != "2")
                 {
                     which = Console.ReadLine() + "";
