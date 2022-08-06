@@ -308,7 +308,7 @@ namespace Nopiosee
                 str = " " + Console.ReadLine() + " ";
                 foreach (string line in m.Keys)
                 {
-                    str = str.ReplaceWholeWord(line.Trim(), m[line].Trim());
+                    str = str.ReplaceWholeWord(m[line].Trim(), line.Trim());
                     str = str.Replace(" ?", "?");
                     str = str.Replace(" !", "!?");
                     str = str.Replace(" .", ".");
