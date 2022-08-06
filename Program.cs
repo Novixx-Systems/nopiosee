@@ -13,6 +13,27 @@
 
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+
+
+
+
+
+/*
+ * 
+ * grammar:
+ * When there is a multiple-version of your word (for example person and persons)
+ * always use the 'e' character after the word (for example pasas and pasase)
+ * 
+ */
+
+
+
+
+
+
+
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -21,12 +42,12 @@ namespace Nopiosee
     static class Program
     {
         static string which = null;
-      
+
         /// <summary>
         /// Before adding a new word, you should check if it does not exist yet,
         /// and you should make sure it is ok.
         /// </summary>
-        static string m = "want - je\ni first - solo\nfirst - beginn\nremove - da unis\nthe - da\nright at - racht e\nof - qae\nto - y\nand - en\na - a\nin - co\nis - equ\nit - cal\nyou - master\nthat - jet\nthat is a - jet equ ze\nhe - hi\nwas - eror\nfor - ta\non - on\nare - yajo\nwith - imusing\nas - assoc\ni - mei\nhis - his\nthey - jar\nbe - had\nat - tocix\none - zao\nhave - ic\nthis - zae\nfrom - freind\nor - of\nhad - yeq\nby - err\nnot - nouhva\nword - klas\nbut - exe\nwhat - asqe\nsome - tu\nwe - qu\ncan - sa\nout - nin\nother - oss\nwere - user\nall - verwij\nthere - tyhre\nwhen - whan\nup - diru\nuse - gess\nyour - yar\nhow - toh\nsaid - talned\ntalk - talne\npoop - buopu\noutput - opu\nwelcome - wyhere\ncool - yhas\napple - appel\nwater - holdon\nlava - lava\neasy - makli\ndance - dans\ndancing - dansing\nfire - fair\ndelete - da unis\nremoved - da unic\nnothing - unis\nname - nym\ntree - bot\ngrass - grous\nhouse - hisj\nforgot - forged\nforget - forge\nsure - zurr\ngoing - gutil\nif - wha\nyes - ja\nno - ne\ncompare - samm\ntwo - tho\nthree - grettho\ngreat - gret\nfour - fortt\nfive - faif\nsix - syzz\nseven - savn\neight - rofin\nnine - nei\nten - thijn\neleven - eddev\nhundred thousand - superthijn\nhundred - exthijn\nthousand - exexthijn\nmillion - milleon\nbillion - billeon\ntrillion - trilleon\nquadrillion - quadrilleon\nquintillion - quintilleon\ncrazy - amazab\nhello - henlo\nheart - corzo\nhome - hisj\nnew - nieuw\nkey - top\nboard - bord\nkeyboard - topbord\nuniverse - univars\ndog - dag\ncat - kat\nhey - henlo\nmaybe - mischen\nstill - toc\nright - rach\nokay - ok\ncold - kuod\nhot - het\nwarm - heet\ngold - geite\nhuge - big\nmonster - monstre\nquad - mik\njust - jaqq\nabout - gon\nversion - versiy\nneed - nee\npermission - permissie\nclose - le disa\ncontinue - le goto\ncannot - sa nouhva\nvalid - valide\nsave - oplisn\ncalculate - calcula\ncalculator - calcular\nsimple - samje\nnumber - digiv\ncontrol - centre\ncontroller - centrell\npress - ola\nletter - latt\nletters - latts\ncharacters - chars\ntried - tryd\nlook - mira\nquestion - pasas\nquestions - pasaos\nany - qe\nlove - corzobe\nslow - calow\nfast - cahi\nquick - cahi\nsex - fakka\ntoday - vandahg\ntoo - ys\nrule - gahhr\nrules - gahhrs\nstranger - string\nstrangers - strings\nnever - novva\ngive - gyvv\nbye - varwell\ngoodbye - varwell\nbeen - bin\nknow - no\naround - ax\nfull - maxi\nholiday - nicedahg\nday - dahg\nwrite - wrait\ndoing - doon\nreally - looto\nlike - loo\nwords - klasse\nidiot - idioot\nidiots - idioots\n";
+        static Dictionary<string, string> m = new Dictionary<string, string>();
         public static String ReplaceWholeWord(this String s, String word, String bywhat)
         {
             char firstLetter = word[0];
@@ -70,18 +91,199 @@ namespace Nopiosee
 
             return sb.ToString();
         }
+        static void Init()
+        {
+            m.Add("want ", " je");
+            m.Add("i first ", " solo");
+            m.Add("first ", " beginn");
+            m.Add("remove ", " da unis");
+            m.Add("the ", " da");
+            m.Add("right at ", " racht e");
+            m.Add("of ", " qae");
+            m.Add("to ", " y");
+            m.Add("and ", " en");
+            m.Add("a ", " a");
+            m.Add("in ", " co");
+            m.Add("is ", " equ");
+            m.Add("it ", " cal");
+            m.Add("you ", " master");
+            m.Add("that ", " jet");
+            m.Add("that is a ", " jet equ ze");
+            m.Add("he ", " hi");
+            m.Add("was ", " eror");
+            m.Add("for ", " ta");
+            m.Add("on ", " on");
+            m.Add("are ", " yajo");
+            m.Add("with ", " imusing");
+            m.Add("as ", " assoc");
+            m.Add("i ", " mei");
+            m.Add("his ", " his");
+            m.Add("they ", " jar");
+            m.Add("be ", " had");
+            m.Add("at ", " tocix");
+            m.Add("one ", " zao");
+            m.Add("have ", " ic");
+            m.Add("this ", " zae");
+            m.Add("from ", " freind");
+            m.Add("or ", " of");
+            m.Add("had ", " yeq");
+            m.Add("by ", " err");
+            m.Add("not ", " nouhva");
+            m.Add("word ", " klas");
+            m.Add("but ", " exe");
+            m.Add("what ", " asqe");
+            m.Add("some ", " tu");
+            m.Add("we ", " qu");
+            m.Add("can ", " sa");
+            m.Add("out ", " nin");
+            m.Add("other ", " oss");
+            m.Add("were ", " user");
+            m.Add("all ", " verwij");
+            m.Add("there ", " tyhre");
+            m.Add("when ", " whan");
+            m.Add("up ", " diru");
+            m.Add("use ", " gess");
+            m.Add("your ", " yar");
+            m.Add("how ", " toh");
+            m.Add("said ", " talned");
+            m.Add("talk ", " talne");
+            m.Add("poop ", " buopu");
+            m.Add("output ", " opu");
+            m.Add("welcome ", " wyhere");
+            m.Add("cool ", " yhas");
+            m.Add("apple ", " appel");
+            m.Add("water ", " holdon");
+            m.Add("lava ", " lava");
+            m.Add("easy ", " makli");
+            m.Add("dance ", " dans");
+            m.Add("dancing ", " dansing");
+            m.Add("fire ", " fair");
+            m.Add("delete ", " da unis");
+            m.Add("removed ", " da unise");
+            m.Add("deleted ", " da unise");
+            m.Add("nothing ", " unis");
+            m.Add("name ", " nym");
+            m.Add("tree ", " bot");
+            m.Add("grass ", " grous");
+            m.Add("house ", " hisj");
+            m.Add("forgot ", " forged");
+            m.Add("forget ", " forge");
+            m.Add("sure ", " zurr");
+            m.Add("going ", " gutil");
+            m.Add("if ", " wha");
+            m.Add("yes ", " ja");
+            m.Add("no ", " ne");
+            m.Add("compare ", " samm");
+            m.Add("two ", " tho");
+            m.Add("three ", " grettho");
+            m.Add("great ", " gret");
+            m.Add("four ", " fortt");
+            m.Add("five ", " faif");
+            m.Add("six ", " syzz");
+            m.Add("seven ", " savn");
+            m.Add("eight ", " rofin");
+            m.Add("nine ", " nei");
+            m.Add("ten ", " thijn");
+            m.Add("eleven ", " eddev");
+            m.Add("hundred thousand ", " superthijn");
+            m.Add("hundred ", " exthijn");
+            m.Add("thousand ", " exexthijn");
+            m.Add("million ", " milleon");
+            m.Add("billion ", " billeon");
+            m.Add("trillion ", " trilleon");
+            m.Add("quadrillion ", " quadrilleon");
+            m.Add("quintillion ", " quintilleon");
+            m.Add("crazy ", " amazab");
+            m.Add("hello ", " henlo");
+            m.Add("heart ", " corzo");
+            m.Add("home ", " hisj");
+            m.Add("new ", " nieuw");
+            m.Add("key ", " top");
+            m.Add("board ", " bord");
+            m.Add("keyboard ", " topbord");
+            m.Add("universe ", " univars");
+            m.Add("dog ", " dag");
+            m.Add("cat ", " kat");
+            m.Add("hey ", " henlo");
+            m.Add("maybe ", " mischen");
+            m.Add("still ", " toc");
+            m.Add("right ", " rach");
+            m.Add("okay ", " ok");
+            m.Add("cold ", " kuod");
+            m.Add("hot ", " het");
+            m.Add("warm ", " heet");
+            m.Add("gold ", " geite");
+            m.Add("huge ", " big");
+            m.Add("monster ", " monstre");
+            m.Add("quad ", " mik");
+            m.Add("just ", " jaqq");
+            m.Add("about ", " gon");
+            m.Add("version ", " versiy");
+            m.Add("need ", " nee");
+            m.Add("permission ", " permissie");
+            m.Add("close ", " le disa");
+            m.Add("continue ", " le goto");
+            m.Add("cannot ", " sa nouhva");
+            m.Add("valid ", " valide");
+            m.Add("save ", " oplisn");
+            m.Add("calculate ", " calcula");
+            m.Add("calculator ", " calcular");
+            m.Add("simple ", " samje");
+            m.Add("number ", " digiv");
+            m.Add("control ", " centre");
+            m.Add("controller ", " centrell");
+            m.Add("press ", " ola");
+            m.Add("letter ", " latt");
+            m.Add("letters ", " latts");
+            m.Add("characters ", " chars");
+            m.Add("tried ", " tryd");
+            m.Add("look ", " mira");
+            m.Add("question ", " pasas");
+            m.Add("questions ", " pasase");
+            m.Add("any ", " qe");
+            m.Add("love ", " corzobe");
+            m.Add("slow ", " calow");
+            m.Add("fast ", " cahi");
+            m.Add("quick ", " cahi");
+            m.Add("sex ", " fakka");
+            m.Add("today ", " vandahg");
+            m.Add("too ", " ys");
+            m.Add("rule ", " gahhr");
+            m.Add("rules ", " gahhre");
+            m.Add("stranger ", " string");
+            m.Add("strangers ", " stringe");
+            m.Add("never ", " novva");
+            m.Add("give ", " gyvv");
+            m.Add("bye ", " varwell");
+            m.Add("goodbye ", " varwell");
+            m.Add("been ", " bin");
+            m.Add("know ", " no");
+            m.Add("around ", " ax");
+            m.Add("full ", " maxi");
+            m.Add("holiday ", " nicedahg");
+            m.Add("day ", " dahg");
+            m.Add("write ", " wrait");
+            m.Add("writes ", " wraite");
+            m.Add("doing ", " doon");
+            m.Add("really ", " looto");
+            m.Add("like ", " loo");
+            m.Add("words ", " klasse");
+            m.Add("idiot ", " idioot");
+            m.Add("idiots ", " idioote");
+        }
         static void Main(string[] args)
         {
             var str = "";
             if (args.Length > 0)
             {
+                Init();
                 if (System.IO.File.Exists(args[0]))
                 {
                     str = " " + System.IO.File.ReadAllText(args[0]) + " ";
-                    foreach (string line in m.Trim().Split('\n'))
+                    foreach (string line in m.Keys)
                     {
                         str = str.ToLower();
-                        str = str.ReplaceWholeWord(line.Split("-".ToCharArray())[0].Trim(), line.Split("-".ToCharArray())[1].Trim());
+                        str = str.ReplaceWholeWord(line.Trim(), m[line].Split("-".ToCharArray())[1].Trim());
                         str = Regex.Replace(str, " {2,}", " ");
                     }
                     Console.WriteLine(str);
@@ -90,6 +292,7 @@ namespace Nopiosee
             }
             if (which == null)
             {
+                Init();
                 Console.WriteLine("Nopiosee Translator Tool\n");
                 while (which != "1" && which != "2")
                 {
@@ -99,9 +302,9 @@ namespace Nopiosee
             if (which == "1")
             {
                 str = " " + Console.ReadLine() + " ";
-                foreach (string line in m.Trim().Split('\n'))
+                foreach (string line in m.Keys)
                 {
-                    str = str.ReplaceWholeWord(line.Split("-".ToCharArray())[1].Trim(), line.Split("-".ToCharArray())[0].Trim());
+                    str = str.ReplaceWholeWord(line.Trim(), m[line].Trim());
                     str = str.Replace(" ?", "?");
                     str = str.Replace(" !", "!?");
                     str = str.Replace(" .", ".");
@@ -112,10 +315,10 @@ namespace Nopiosee
             else
             {
                 str = " " + Console.ReadLine() + " ";
-                foreach (string line in m.Trim().Split('\n'))
+                foreach (string line in m.Keys)
                 {
                     str = str.ToLower();
-                    str = str.ReplaceWholeWord(line.Split("-".ToCharArray())[0].Trim(), line.Split("-".ToCharArray())[1].Trim());
+                    str = str.ReplaceWholeWord(line.Trim(), m[line].Trim());
                     str = Regex.Replace(str, " {2,}", " ");
                 }
             }
