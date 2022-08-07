@@ -275,6 +275,9 @@ namespace Nopiosee
             m.Add("hate ", " haates");
             m.Add("hates ", " haatese");
             m.Add("without ", " zondre");
+            m.Add("amount ", " sizo");
+            m.Add("someone ", " tuian");
+            m.Add("something ", " tuess");
         }
         static void Main(string[] args)
         {
