@@ -274,6 +274,7 @@ namespace Nopiosee
             m.Add("languages ", " taale");
             m.Add("hate ", " haates");
             m.Add("hates ", " haatese");
+            m.Add("without ", " zondre");
         }
         static void Main(string[] args)
         {
