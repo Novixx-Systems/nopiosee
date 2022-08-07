@@ -278,6 +278,11 @@ namespace Nopiosee
             m.Add("amount ", " sizo");
             m.Add("someone ", " tuian");
             m.Add("something ", " tuess");
+            m.Add("ask ", " qesa");
+            m.Add("asking ", " qesae");
+            m.Add("which ", " welk");
+            m.Add("used ", " gesse");
+            m.Add("using ", " gessene");
         }
         static void Main(string[] args)
         {
