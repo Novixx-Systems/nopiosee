@@ -26,6 +26,8 @@
  * When there is a multiple-version of your word (for example person and persons)
  * always use the 'e' character after the word (for example pasas and pasase)
  * 
+ * If a line (not a sentence) ends with '?', start the line with '¿'
+ * 
  */
 
 
@@ -66,7 +68,7 @@ namespace Nopiosee
                             bool wholeWordFound = true;
                             if (s.Length > i + word.Length)
                             {
-                                if (Char.IsLetterOrDigit(s[i + word.Length]))
+                                if (Char.IsLetterOrDigit(s[i + word.Length]) || s[i + word.Length] == '\'')
                                     wholeWordFound = false;
                             }
 
@@ -89,10 +91,12 @@ namespace Nopiosee
             if (s.Length - i > 0)
                 sb.Append(s.Substring(i));
 
+
             return sb.ToString();
         }
         static void Init()
         {
+            // Misc
             m.Add("want ", " je");
             m.Add("i first ", " solo");
             m.Add("first ", " beginn");
@@ -283,6 +287,25 @@ namespace Nopiosee
             m.Add("which ", " welk");
             m.Add("used ", " gesse");
             m.Add("using ", " gessene");
+            m.Add("longer ", " lengre");
+            m.Add("invalid ", " incrate");
+            m.Add("recoverable ", " regetabel");
+            m.Add("unrecoverable ", " inregetabel");
+            m.Add("protection ", " vededige");
+            m.Add("protect ", " vededig");
+            m.Add("unrecognized", " inrecognized");
+            m.Add("must", " mus");
+            m.Add("present ", " pressena");
+            m.Add("system ", " systeem");
+            m.Add("error ", " fatle");
+            m.Add("fatal ", " fettele");
+            m.Add("table ", " tabel");
+            m.Add("tables ", " tabele");
+            // Very epic english shortcuts
+            m.Add("it's ", " cal equ");
+            m.Add("i'm ", " mei equ");
+            m.Add("don't ", " do nouhva");
+            m.Add("you're ", " master yajo");
         }
         static void Main(string[] args)
         {
@@ -319,11 +342,13 @@ namespace Nopiosee
                 {
                     str = str.ReplaceWholeWord(m[line].Trim(), line.Trim());
                     str = str.Replace(" ?", "?");
-                    str = str.Replace(" !", "!?");
+                    str = str.Replace(" !", "!");
                     str = str.Replace(" .", ".");
+                    str = str.Replace("¿ ", "");
                     str = str.Replace(" ,", ",");
                     str = Regex.Replace(str, " {2,}", " ");
                 }
+                Console.WriteLine("-> " + str);
             }
             else
             {
@@ -332,10 +357,12 @@ namespace Nopiosee
                 {
                     str = str.ToLower();
                     str = str.ReplaceWholeWord(line.Trim(), m[line].Trim());
+
+
                     str = Regex.Replace(str, " {2,}", " ");
                 }
+                Console.WriteLine("-> " + (str.EndsWith("? ") ? "¿" + str.Substring(1) : str));
             }
-            Console.WriteLine("-> " + str);
             Main(args);
         }
     }
