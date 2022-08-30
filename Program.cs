@@ -26,7 +26,7 @@
  * When there is a multiple-version of your word (for example person and persons)
  * always use the 'e' character after the word (for example pasas and pasase)
  * 
- * If a line (not a sentence) ends with '?', start the line with '¿'
+ * If a sentence ends with '?', start the line with '¿'
  * 
  */
 
@@ -38,6 +38,7 @@
 
 using System.Text;
 using System.Text.RegularExpressions;
+using SpeechLib;
 
 namespace Nopiosee
 {
@@ -96,13 +97,27 @@ namespace Nopiosee
         }
         static void Init()
         {
+            // Very epic english shortcuts
+            m.Add("it's ", " it is");
+            m.Add("its ", " it is");
+            m.Add("thats ", " that is");
+            m.Add("that's ", " that is");
+            m.Add("i'm ", " i am");
+            m.Add("im ", " i am");
+            m.Add("don't ", " do not");
+            m.Add("dont ", " do not");
+            m.Add("wanna ", " want to");
+            m.Add("you're ", " you are");
             // Misc
+            m.Add("you have ", " masteqe");
+            m.Add("kidding ", " qavoe");
             m.Add("want ", " je");
+            m.Add("are you ", " qi");
             m.Add("i first ", " solo");
             m.Add("first ", " beginn");
             m.Add("remove ", " da unis");
             m.Add("the ", " da");
-            m.Add("right at ", " racht e");
+            m.Add("right at ", " rach e");
             m.Add("of ", " qae");
             m.Add("to ", " y");
             m.Add("and ", " en");
@@ -110,17 +125,17 @@ namespace Nopiosee
             m.Add("in ", " co");
             m.Add("is ", " equ");
             m.Add("it ", " cal");
-            m.Add("you ", " master");
+            m.Add("you ", " un");
             m.Add("that ", " jet");
             m.Add("that is a ", " jet equ ze");
             m.Add("he ", " hi");
             m.Add("was ", " eror");
             m.Add("for ", " ta");
             m.Add("on ", " on");
-            m.Add("are ", " yajo");
             m.Add("with ", " imusing");
             m.Add("as ", " assoc");
             m.Add("i ", " mei");
+            m.Add("are ", " q");
             m.Add("his ", " his");
             m.Add("they ", " jar");
             m.Add("be ", " had");
@@ -164,7 +179,9 @@ namespace Nopiosee
             m.Add("fire ", " fair");
             m.Add("delete ", " da unis");
             m.Add("removed ", " da unise");
+            m.Add("removes ", " da unise");
             m.Add("deleted ", " da unise");
+            m.Add("deletes ", " da unise");
             m.Add("nothing ", " unis");
             m.Add("name ", " nym");
             m.Add("tree ", " bot");
@@ -172,15 +189,19 @@ namespace Nopiosee
             m.Add("house ", " hisj");
             m.Add("forgot ", " forged");
             m.Add("forget ", " forge");
-            m.Add("sure ", " zurr");
+            m.Add("sure ", " yos");
             m.Add("going ", " gutil");
             m.Add("if ", " wha");
             m.Add("yes ", " ja");
+            m.Add("know ", " nó");
             m.Add("no ", " ne");
             m.Add("compare ", " samm");
             m.Add("two ", " tho");
             m.Add("three ", " grettho");
             m.Add("great ", " gret");
+            m.Add("joke ", " qavo");
+            m.Add("jokes ", " qeve");
+            m.Add("joking ", " qave");
             m.Add("four ", " fortt");
             m.Add("five ", " faif");
             m.Add("six ", " syzz");
@@ -197,7 +218,7 @@ namespace Nopiosee
             m.Add("trillion ", " trilleon");
             m.Add("quadrillion ", " quadrilleon");
             m.Add("quintillion ", " quintilleon");
-            m.Add("crazy ", " amazab");
+            m.Add("crazy ", " amaz");
             m.Add("hello ", " henlo");
             m.Add("heart ", " corzo");
             m.Add("home ", " hisj");
@@ -220,7 +241,7 @@ namespace Nopiosee
             m.Add("huge ", " big");
             m.Add("monster ", " monstre");
             m.Add("quad ", " mik");
-            m.Add("just ", " jaqq");
+            m.Add("just ", " jaq");
             m.Add("about ", " gon");
             m.Add("version ", " versiy");
             m.Add("need ", " nee");
@@ -232,8 +253,8 @@ namespace Nopiosee
             m.Add("save ", " oplisn");
             m.Add("calculate ", " calcula");
             m.Add("calculator ", " calcular");
-            m.Add("simple ", " samje");
-            m.Add("number ", " digiv");
+            m.Add("simple ", " simpel");
+            m.Add("number ", " digi");
             m.Add("control ", " centre");
             m.Add("controller ", " centrell");
             m.Add("press ", " ola");
@@ -261,7 +282,6 @@ namespace Nopiosee
             m.Add("bye ", " varwell");
             m.Add("goodbye ", " varwell");
             m.Add("been ", " bin");
-            m.Add("know ", " no");
             m.Add("around ", " ax");
             m.Add("full ", " maxi");
             m.Add("holiday ", " nicedahg");
@@ -301,11 +321,57 @@ namespace Nopiosee
             m.Add("fatal ", " fettele");
             m.Add("table ", " tabel");
             m.Add("tables ", " tabele");
-            // Very epic english shortcuts
-            m.Add("it's ", " cal equ");
-            m.Add("i'm ", " mei equ");
-            m.Add("don't ", " do nouhva");
-            m.Add("you're ", " master yajo");
+            m.Add("my ", " ya");
+            m.Add("feel ", " be");
+            m.Add("feeling ", " ebe");
+            m.Add("eat ", " eet");
+            m.Add("eats ", " eete");
+            m.Add("eating ", " eete");
+            m.Add("baby ", " chel");
+            m.Add("child ", " chella");
+            m.Add("drink ", " eer");
+            m.Add("drinks ", " eere");
+            m.Add("drinking ", " eere");
+            m.Add("cake ", " keek");
+            m.Add("more ", " mer");
+            m.Add("attempt ", " at");
+            m.Add("file ", " exto");
+            m.Add("folder ", " map");
+            m.Add("directory ", " map");
+            m.Add("specify ", " spec");
+            m.Add("specified ", " spec");
+            m.Add("specific ", " spece");
+            m.Add("specifies ", " speca");
+            m.Add("type ", " tik");
+            m.Add("types ", " tike");
+            m.Add("typing ", " tike");
+            m.Add("text ", " tekst");
+            m.Add("texting ", " tekste");
+            m.Add("texted ", " tekste");
+            m.Add("change ", " chas");
+            m.Add("changing ", " chase");
+            m.Add("changed ", " chase");
+            m.Add("program ", " programme");
+            m.Add("programming ", " program");
+            m.Add("screen ", " scherm");
+            m.Add("following ", " nekst");
+            m.Add("follow ", " nek");
+            m.Add("special ", " speciaalen");
+            m.Add("default ", " normale");
+            m.Add("setting ", " instan");
+            m.Add("settings ", " instane");
+            m.Add("now ", " nu");
+            m.Add("current ", " now");
+            m.Add("currently ", " nowe");
+            m.Add("displays ", " monitere");
+            m.Add("display ", " moniter");
+            m.Add("because ", " omdat");
+            m.Add("either ", " az");
+            m.Add("missing ", " unfin");
+            m.Add("tell ", " como");
+            m.Add("gay ", " homo");
+            m.Add("gays ", " homoe");
+            m.Add("so ", " soy");
         }
         static void Main(string[] args)
         {
@@ -344,7 +410,7 @@ namespace Nopiosee
                     str = str.Replace(" ?", "?");
                     str = str.Replace(" !", "!");
                     str = str.Replace(" .", ".");
-                    str = str.Replace("¿ ", "");
+                    str = str.Replace(" ¿", "");
                     str = str.Replace(" ,", ",");
                     str = Regex.Replace(str, " {2,}", " ");
                 }
@@ -362,6 +428,13 @@ namespace Nopiosee
                     str = Regex.Replace(str, " {2,}", " ");
                 }
                 Console.WriteLine("-> " + (str.EndsWith("? ") ? "¿" + str.Substring(1) : str));
+                ISpeechVoice voice = new SpVoice();
+                voice.Rate = 2;
+                voice.Volume = 100;
+                voice.Speak("<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>"
+                            + new string(str.Select(x => x == '2' ? '7' : (x == '7' ? '2' : x)).ToArray()).Replace("qe", "k").Replace("le", "lah") // pronounciation
+                            + "</speak>",
+                            SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML); ;
             }
             Main(args);
         }
