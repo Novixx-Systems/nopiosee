@@ -108,6 +108,7 @@ namespace Nopiosee
             m.Add("dont ", " do not");
             m.Add("wanna ", " want to");
             m.Add("you're ", " you are");
+            m.Add("right now ", " paso");
             // Misc
             m.Add("you have ", " masteqe");
             m.Add("kidding ", " qavoe");
@@ -144,7 +145,7 @@ namespace Nopiosee
             m.Add("have ", " ic");
             m.Add("this ", " zae");
             m.Add("from ", " freind");
-            m.Add("or ", " of");
+            m.Add("or ", " que");
             m.Add("had ", " yeq");
             m.Add("by ", " err");
             m.Add("not ", " nouhva");
@@ -372,6 +373,10 @@ namespace Nopiosee
             m.Add("gay ", " homo");
             m.Add("gays ", " homoe");
             m.Add("so ", " soy");
+            m.Add("music ", " musiek");
+            m.Add("ball ", " bal");
+            m.Add("difficult ", " difficil");
+            m.Add("difficulty ", " difficile");
         }
         static void Main(string[] args)
         {
@@ -429,10 +434,10 @@ namespace Nopiosee
                 }
                 Console.WriteLine("-> " + (str.EndsWith("? ") ? "¿" + str.Substring(1) : str));
                 ISpeechVoice voice = new SpVoice();
-                voice.Rate = 2;
+                voice.Rate = 1;
                 voice.Volume = 100;
                 voice.Speak("<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>"
-                            + new string(str.Select(x => x == '2' ? '7' : (x == '7' ? '2' : x)).ToArray()).Replace("qe", "k").Replace("le", "lah") // pronounciation
+                            + new string(str.Select(x => x == '2' ? '7' : (x == '7' ? '2' : x)).ToArray()).Replace("oss", "oz").Replace("qe", "k").Replace("le", "lah").Replace(" bal", " bel").Replace("dahg ", " do ") // pronounciation
                             + "</speak>",
                             SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML); ;
             }
