@@ -36,8 +36,12 @@
 
 
 
+using System;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SpeechLib;
 
 namespace Nopiosee
@@ -103,12 +107,26 @@ namespace Nopiosee
             m.Add("thats ", " that is");
             m.Add("that's ", " that is");
             m.Add("i'm ", " i am");
+            m.Add("aren't ", " not");
             m.Add("im ", " i am");
             m.Add("don't ", " do not");
             m.Add("dont ", " do not");
             m.Add("wanna ", " want to");
             m.Add("you're ", " you are");
-            m.Add("right now ", " paso");
+            m.Add("gotta ", " need to");
+            // Words that are easy or whatever you call them I am too stupid to know
+            m.Add("please ", " ta mei play");
+            m.Add("i want ", " paso");
+            m.Add("what is ", " dimi");
+            m.Add("is dumb ", " equ domelementa");
+            m.Add("is cool ", " equ yhasa");
+            m.Add("is crazy ", " equ amaza");
+            m.Add("am free ", " am outo");
+            m.Add("you are free ", " un q outo");
+            m.Add("are you free ", " qi outo");
+            m.Add("he is free ", " hi equ outo");
+            m.Add("she is free ", " shi equ outo");
+            m.Add("free ", " grathis");
             // Misc
             m.Add("you have ", " masteqe");
             m.Add("kidding ", " qavoe");
@@ -130,6 +148,7 @@ namespace Nopiosee
             m.Add("that ", " jet");
             m.Add("that is a ", " jet equ ze");
             m.Add("he ", " hi");
+            m.Add("she ", " shi");
             m.Add("was ", " eror");
             m.Add("for ", " ta");
             m.Add("on ", " on");
@@ -138,6 +157,7 @@ namespace Nopiosee
             m.Add("i ", " mei");
             m.Add("are ", " q");
             m.Add("his ", " his");
+            m.Add("her ", " shis");
             m.Add("they ", " jar");
             m.Add("be ", " had");
             m.Add("at ", " tocix");
@@ -377,6 +397,93 @@ namespace Nopiosee
             m.Add("ball ", " bal");
             m.Add("difficult ", " difficil");
             m.Add("difficulty ", " difficile");
+            m.Add("night ", " yano");
+            m.Add("tonight ", " noyano");
+            m.Add("boy ", " nano");
+            m.Add("girl ", " nani");
+            m.Add("man ", " grano");
+            m.Add("woman ", " grani");
+            m.Add("dumb ", " domelement");
+            m.Add("then ", " es");
+            m.Add("buy ", " perche");
+            m.Add("purchase ", " perche");
+            m.Add("purchased ", " eperche");
+            m.Add("bought ", " eperche");
+            m.Add("master ", " mess");
+            m.Add("teacher ", " teclar");
+            m.Add("teachers ", " teclare");
+            m.Add("toilet ", " toilette");
+            m.Add("go ", " goto");
+            m.Add("amazing ", " hanya");
+            m.Add("amazed ", " hanyae");
+            m.Add("boss ", " berfung");
+            m.Add("bosses ", " berfunge");
+            m.Add("thank un ", " berfussi");
+            m.Add("thanks ", " berfussi");
+            m.Add("imagination ", " imaginacíon");
+            m.Add("translate ", " transacíon");
+            m.Add("translated ", " transacíone");
+            m.Add("game ", " spell");
+            m.Add("games ", " spelle");
+            m.Add("gaming ", " spella");
+            m.Add("abbreviation ", " simpelecíon");
+            m.Add("abbreviations ", " simpelecíone");
+            m.Add("animal ", " anymel");
+            m.Add("animals ", " anymele");
+            m.Add("cute ", " hox");
+            m.Add("experience ", " pengelemen");
+            m.Add("experiences ", " pengelemene");
+            m.Add("experiencing ", " pengelemena");
+            m.Add("command ", " komander");
+            m.Add("commands ", " komandere");
+            m.Add("commanding ", " komandera");
+            m.Add("computer ", " computadoll");
+            m.Add("computers ", " computadolle");
+            m.Add("computing ", " computadolla");
+            m.Add("normal ", " okal");
+            m.Add("normally ", " okale");
+            m.Add("certain ", " tu");
+            m.Add("applications ", " appecíone");
+            m.Add("application ", " appecíon");
+            m.Add("apps ", " appe");
+            m.Add("files ", " exto");
+            m.Add("cooler ", " yhasa");
+            m.Add("color ", " kolor");
+            m.Add("colors ", " kolore");
+            m.Add("black ", " zwart");
+            m.Add("gray ", " greis");
+            m.Add("white ", " whit");
+            m.Add("purple ", " porpel");
+            m.Add("green ", " groel");
+            m.Add("lime ", " cimoen");
+            m.Add("yellow ", " geel");
+            m.Add("blue ", " bouw");
+            m.Add("orange ", " sinas");
+            m.Add("zero ", " null");
+            m.Add("favorite ", " favoritto");
+            m.Add("favorites ", " favorittoe");
+            m.Add("start ", " beginne");
+            m.Add("additional ", " additicíon");
+            m.Add("task ", " tako");
+            m.Add("tasks ", " takoe");
+            m.Add("apples ", " appele");
+            m.Add("easiest ", " makliest");
+            m.Add("defaults ", " normale");
+            m.Add("sun ", " zon");
+            m.Add("under ", " onder");
+            m.Add("same ", " zelde");
+            m.Add("anyone ", " yian");
+            m.Add("others ", " osse");
+        }
+        static bool IsAllUpper(string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (!Char.IsUpper(input[i]))
+                    return false;
+            }
+
+            return true;
         }
         static void Main(string[] args)
         {
@@ -384,6 +491,70 @@ namespace Nopiosee
             if (args.Length > 0)
             {
                 Init();
+                if (args[0] == "res")
+                {
+                    if (System.IO.File.Exists(args[1]))
+                    {
+                        str = " " + System.IO.File.ReadAllText(args[1]) + " ";
+                        str = str.Replace("\\r\\n", "*(%$%*($%^()($$*######");
+                        foreach (string line in str.Split("\n"))
+                        {
+                            try
+                            {
+                                string newlp = line.Split("\"")[1];
+                                string oldlp = line.Split("\"")[1];
+                                newlp = newlp.ToLower();
+                                foreach (string linae in m.Keys)
+                                {
+                                    newlp = newlp.ReplaceWholeWord(linae.Trim(), m[linae].Trim());
+                                    newlp = Regex.Replace(newlp, " {2,}", " ");
+                                    newlp = newlp.EndsWith("? ") ? "¿" + newlp.Substring(1) : newlp;
+                                }
+                                str = str.Replace(oldlp, newlp);
+                            }
+                            catch
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    str = str.Replace("*(%$%*($%^()($$*######", "\\r\\n");
+                    Console.WriteLine(str);
+                    Environment.Exit(0);
+                }
+                if (args[0] == "dic")
+                {
+                    int dicint = 0;
+                    foreach (string line in m.Keys)
+                    {
+                        dicint++;
+                        if (dicint < 30)
+                        {
+                            continue;
+                        }
+                        using var httpClient = new HttpClient();
+                        var request = new HttpRequestMessage(HttpMethod.Get, "https://api.dictionaryapi.dev/api/v2/entries/en/" + line);
+                        var response = httpClient.Send(request);
+                        using var reader = new StreamReader(response.Content.ReadAsStream());
+                        string responseBody = reader.ReadToEnd();
+                        dynamic stuff = JsonConvert.DeserializeObject(responseBody);
+
+                        foreach (var s in stuff)
+                        {
+
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[0].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[1].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[2].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[3].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[4].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[5].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[6].definition"));
+                            Console.WriteLine(m[line] + "    ===   " + (string)s.SelectToken("meanings[0].definitions[7].definition"));
+                            break;
+                        }
+                    }
+                    Environment.Exit(0);
+                }
                 if (System.IO.File.Exists(args[0]))
                 {
                     str = " " + System.IO.File.ReadAllText(args[0]) + " ";
@@ -392,6 +563,7 @@ namespace Nopiosee
                         str = str.ToLower();
                         str = str.ReplaceWholeWord(line.Trim(), m[line].Trim());
                         str = Regex.Replace(str, " {2,}", " ");
+                        str = str.EndsWith("? ") ? "¿" + str.Substring(1) : str;
                     }
                     Console.WriteLine(str);
                 }
@@ -400,7 +572,7 @@ namespace Nopiosee
             if (which == null)
             {
                 Init();
-                Console.WriteLine("Nopiosee Translator Tool\n");
+                Console.WriteLine("Nopiosee Translator Tool (US English -> Nopiosee or vice versa)\n");
                 while (which != "1" && which != "2")
                 {
                     which = Console.ReadLine() + "";
@@ -437,7 +609,7 @@ namespace Nopiosee
                 voice.Rate = 1;
                 voice.Volume = 100;
                 voice.Speak("<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>"
-                            + new string(str.Select(x => x == '2' ? '7' : (x == '7' ? '2' : x)).ToArray()).Replace("oss", "oz").Replace("qe", "k").Replace("le", "lah").Replace(" bal", " bel").Replace("dahg ", " do ") // pronounciation
+                            + str.Replace("1", "zao").Replace("0", "null").Replace("oss", "oz").Replace("qe", "k").Replace("le", "lah").Replace(" bal", " bel").Replace("dahg ", " do ").Replace("t", "j").Replace("ja", "ya").Replace("assoc", "assok") // pronounciation
                             + "</speak>",
                             SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML); ;
             }
